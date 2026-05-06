@@ -164,3 +164,126 @@ Visual storytelling decisions were deliberate:
 - **Green/red color encoding** on the headline late-vs-on-time chart, to make the satisfaction gap immediately emotionally clear
 - **Top-N filtering** applied at the visual level rather than baked into views, keeping views reusable across different dashboard contexts
 - **Aligned sorting** on Page 3's bottom charts — slowest delivery states on the left, lowest review states on the right — visually proving the headline insight at the geographic level
+
+-------------------------------------------------------------------------------------------
+
+## 💡 Key Insights
+
+### 1. Late deliveries cost ~1.7 review stars
+
+On-time orders average **4.29 stars**, while late orders average just **2.57 stars** — a gap of 1.73 stars from a single operational variable. Across 95,808 delivered orders with reviews, delivery accuracy is the strongest measurable driver of customer satisfaction in the dataset.
+
+### 2. The delivery-satisfaction link plays out geographically
+
+The same Brazilian states appear at the top of both rankings: slowest delivery and worst reviews. **Roraima, Amapá, Maranhão, and Alagoas** — all in northern or northeastern Brazil — show 25–30 day average delivery times alongside the lowest average review scores nationally. The headline insight isn't a uniform pattern; it's concentrated in the regions where Olist's logistics network is weakest.
+
+### 3. Olist runs an under-promise, over-deliver logistics strategy
+
+Average actual delivery is **~12 days**, while average estimated delivery is **~23 days** — Olist consistently delivers nearly twice as fast as promised. The 11-day buffer is large enough to be deliberate, providing headroom for the 8% of orders that do run late and protecting customer satisfaction on the rest.
+
+### 4. Revenue is heavily concentrated in 3 states
+
+São Paulo, Rio de Janeiro, and Minas Gerais together account for the majority of Olist's revenue. This reflects Brazil's economic geography (the Southeast region holds most of the country's GDP) but also signals where future growth will need to come from — expansion into the underserved north and northeast.
+
+### 5. Health & Beauty leads category sales
+
+Health & beauty tops category revenue at ~$1.4M, followed by watches & gifts and bed/bath/table. This aligns with Brazil's status as one of the world's largest cosmetics and personal care markets — a useful contextual lens for any international platform considering Brazilian expansion.
+
+### 6. Brazilian payment behavior is dominated by two methods
+
+Credit card (~74%) and boleto (a Brazilian bank slip, ~19%) together account for roughly **95% of all transactions**. The persistence of boleto despite the rise of digital payments reflects Brazil's hybrid payment landscape — a market characteristic that international platforms entering Brazil need to design around.
+
+### 7. November 2017 was the single largest revenue month
+
+Revenue peaked sharply in November 2017, driven primarily by Black Friday Brazil. The month's outlier performance highlights Olist's exposure to event-driven seasonality — relevant for inventory planning, capacity forecasting, and risk management around peak periods.
+
+-------------------------------------------------------------------------------------------
+
+## 🎓 Skills Demonstrated
+
+### SQL (MySQL)
+- Multi-table JOINs across up to 4 tables
+- Aggregations: `SUM`, `COUNT`, `COUNT DISTINCT`, `AVG`, `ROUND`
+- Window functions: `ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...)` for deduplication
+- Conditional logic: `CASE WHEN` for bucketing and conditional aggregation
+- Subqueries: scalar subqueries for percentage-of-total calculations
+- Date arithmetic: `TIMESTAMPDIFF()`, `DATE_FORMAT()`
+- View design: layered cleaning + analytical views, separating raw and clean data
+- Database design: primary keys, composite keys, foreign-key-style indexes
+- Bulk loading: `LOAD DATA LOCAL INFILE` for fast CSV import
+- Data quality: duplicate detection, NULL audits, logical consistency checks
+
+### Power BI / DAX
+- Multi-page dashboard design with consistent visual language
+- Star-style data model with dedicated `_Measures` table
+- DAX measures: `SUM`, `AVERAGE`, `DIVIDE`, `CALCULATE` with filter context, measure composition
+- Conditional formatting: green/red color encoding for binary categorical comparison
+- Visual-level filtering: Top-N filters, axis sort manipulation
+- Storytelling layout: KPI cards, time-series, ranked bar charts, paired comparisons
+
+### Analytical Thinking
+- Problem decomposition: business questions → SQL plan → views → visuals
+- Data quality awareness: identifying corrupt placeholders, handling business-meaningful NULLs
+- Statistical rigor: catching average-of-averages bias, applying weighted averaging via raw views
+- QA discipline: sanity-checking aggregates, refactoring `SUM(CASE WHEN)` to `COUNT DISTINCT CASE WHEN` after detecting double-counting
+- Decision documentation: justifying inclusions, exclusions, and known data quirks
+
+### Tools & Workflow
+- MySQL Workbench: schema design, query authoring, debugging
+- Power BI Desktop: data modeling, DAX, report design
+- Git / GitHub: portfolio publishing, structured repository organization
+
+-------------------------------------------------------------------------------------------
+
+## 🚀 How to Reproduce
+
+To run this analysis locally, follow these steps:
+
+### Prerequisites
+- MySQL 8.0+ and MySQL Workbench installed
+- Power BI Desktop installed (Windows)
+- MySQL Connector/NET (required for Power BI to connect to MySQL)
+
+### Step 1 — Download the dataset
+Download the 9 source CSVs from the [Olist Kaggle page](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce). Save them to a local folder.
+
+### Step 2 — Prepare MySQL for local file imports
+Enable `LOAD DATA LOCAL INFILE` on both server and client side:
+
+```sql
+SET GLOBAL local_infile = 1;
+```
+
+In Workbench, also configure the connection: **Edit Connection → Advanced → Others** → add `OPT_LOCAL_INFILE=1`. Restart Workbench after applying.
+
+### Step 3 — Run the SQL files in order
+Open each SQL file in MySQL Workbench and execute. Adjust the file paths in `01_setup_and_import.sql` to match where you saved the CSVs.
+
+1. `sql/01_setup_and_import.sql` — Creates tables and loads data
+2. `sql/02_data_cleaning.sql` — Cleans and audits the data, builds cleaning views
+3. `sql/03_keys_and_indexes.sql` — Applies primary keys and indexes
+4. `sql/04_analysis_views.sql` — Builds the 11 analytical views
+
+### Step 4 — Open the Power BI dashboard
+Open `powerbi/olist_dashboard.pbix`. The file is configured to connect to a local MySQL database named `olist`. Update the connection credentials when prompted.
+
+If the connection fails, reconfigure via **Home → Transform Data → Data Source Settings → Change Source** and point to your local MySQL instance.
+
+### Step 5 — Refresh and explore
+Click **Refresh** in Power BI Desktop to pull data from your local MySQL views. The three dashboard pages should populate with data matching the screenshots above.
+
+-------------------------------------------------------------------------------------------
+
+## 👋 About Me
+
+This is the latest project in my journey to become a junior data analyst. My portfolio also includes work in **R**, **Power BI**, and **SQL** across public datasets including Cyclistic, Bellabeat, and Amazon Delivery — all available in my [GitHub profile](https://github.com/mosalahshawky).
+
+I'm currently looking for **junior data analyst** opportunities where I can apply these skills to real business problems and continue growing.
+
+📧 **Contact:** mosalahshawky@gmail.com 
+💼 **LinkedIn:** https://www.linkedin.com/in/mohamed-s-shawky/
+🌐 **Other portfolio projects:** [github.com/mosalahshawky](https://github.com/mosalahshawky)
+
+---
+
+*If you found this project useful or have feedback, feel free to ⭐ the repo or open an issue. Always happy to learn and improve.*
