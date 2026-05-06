@@ -54,3 +54,23 @@ Table layout — quick visual scan, no fluff
 - Corrupt `0000-00-00 00:00:00` placeholders in 5 datetime columns (converted to NULL)
 - 24 delivered orders with missing intermediate timestamps (excluded from delivery analysis)
 - 1,359 orders with carrier date logged before approval date (flagged as a documented business pipeline quirk, not a data error)
+
+-------------------------------------------------------------------------------------------
+
+## 📁 Project Structure
+
+```
+olist-brazilian-ecommerce-analysis/
+├── README.md
+├── images/
+│   ├── page1_overview.png
+│   ├── page2_sales.png
+│   └── page3_delivery.png
+├── sql/
+│   ├── 01_setup_and_import.sql      # CREATE TABLE, LOAD DATA, ALTER for type fixes
+│   ├── 02_data_cleaning.sql          # Duplicate audit, NULL audit, zero-date fixes, cleaning views
+│   ├── 03_keys_and_indexes.sql       # Primary keys, composite keys, foreign key indexes
+│   └── 04_analysis_views.sql         # 11 analytical views for Power BI consumption
+└── powerbi/
+    └── olist_dashboard.pbix          # Power BI Desktop file (3-page dashboard)
+```
