@@ -281,7 +281,9 @@ This is the latest project in my journey to become a junior data analyst. My por
 I'm currently looking for **junior data analyst** opportunities where I can apply these skills to real business problems and continue growing.
 
 📧 **Contact:** mosalahshawky@gmail.com 
+
 💼 **LinkedIn:** https://www.linkedin.com/in/mohamed-s-shawky/
+
 🌐 **Other portfolio projects:** [github.com/mosalahshawky](https://github.com/mosalahshawky)
 
 ---
